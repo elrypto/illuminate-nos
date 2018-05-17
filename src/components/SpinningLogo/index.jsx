@@ -7,9 +7,7 @@ import nosLogo from "./../../assets/logo.png";
 const styles = {
   logoContainer: {
     display: "block",
-    maxWidth: "200px",
-    margin: "32px auto",
-    position: "relative"
+    maxWidth: "40px",
   },
   nosLogo: {
     animation: "nOS-logo-spin infinite 3s linear",

@@ -331,6 +331,22 @@ assert@^1.1.1:
   dependencies:
     util "0.10.3"
 
+assets@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/assets/-/assets-3.0.0.tgz#0899b030c76701bf9b4a015a0da2ed18ecc1d833"
+  dependencies:
+    async "^2.5.0"
+    bluebird "^3.4.6"
+    calipers "^2.0.0"
+    calipers-gif "^2.0.0"
+    calipers-jpeg "^2.0.0"
+    calipers-png "^2.0.0"
+    calipers-svg "^2.0.0"
+    calipers-webp "^2.0.0"
+    glob "^7.0.6"
+    lodash "^4.15.0"
+    mime "^1.4.0"
+
 assign-symbols@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/assign-symbols/-/assign-symbols-1.0.0.tgz#59667f41fadd4f20ccbc2bb96b8d4f7f78ec0367"
@@ -355,7 +371,7 @@ async@^1.4.0:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/async/-/async-1.5.2.tgz#ec6a61ae56480c0c3cb241c95618e20892f9672a"
 
-async@^2.1.4:
+async@^2.1.4, async@^2.5.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/async/-/async-2.6.0.tgz#61a29abb6fcc026fea77e56d1c6ec53a795951f4"
   dependencies:
@@ -1098,7 +1114,7 @@ block-stream@*:
   dependencies:
     inherits "~2.0.0"
 
-bluebird@^3.0.5:
+bluebird@3.x.x, bluebird@^3.0.5, bluebird@^3.4.6:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.1.tgz#d9551f9de98f1fcda1e683d17ee91a0602ee2eb9"
 
@@ -1313,6 +1329,42 @@ cache-base@^1.0.1:
     to-object-path "^0.3.0"
     union-value "^1.0.0"
     unset-value "^1.0.0"
+
+calipers-gif@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/calipers-gif/-/calipers-gif-2.0.0.tgz#b5eefec3064a77c6dcdbd5bdc51735a01bafdc37"
+  dependencies:
+    bluebird "3.x.x"
+
+calipers-jpeg@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/calipers-jpeg/-/calipers-jpeg-2.0.0.tgz#06d56a53f62717dd809cb956cf64423ce693465b"
+  dependencies:
+    bluebird "3.x.x"
+
+calipers-png@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/calipers-png/-/calipers-png-2.0.0.tgz#1d0d20e5c1ae5f79b74d5286a2e97f59bb70b658"
+  dependencies:
+    bluebird "3.x.x"
+
+calipers-svg@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/calipers-svg/-/calipers-svg-2.0.0.tgz#666254d5f1ea66d2052ed82d6d79b8bf10acbb71"
+  dependencies:
+    bluebird "3.x.x"
+
+calipers-webp@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/calipers-webp/-/calipers-webp-2.0.0.tgz#e126ece2f84cd71779612bfa2b2653cd95cea77a"
+  dependencies:
+    bluebird "3.x.x"
+
+calipers@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/calipers/-/calipers-2.0.0.tgz#bdf221c6a62f603b8ddd9340cacd9c79c1a03fce"
+  dependencies:
+    bluebird "3.x.x"
 
 caller-path@^0.1.0:
   version "0.1.0"
@@ -2795,7 +2847,7 @@ glob-parent@^3.1.0:
     is-glob "^3.1.0"
     path-dirname "^1.0.0"
 
-glob@^7.0.3, glob@^7.0.5, glob@^7.1.1, glob@^7.1.2:
+glob@^7.0.3, glob@^7.0.5, glob@^7.0.6, glob@^7.1.1, glob@^7.1.2:
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.2.tgz#c19c9df9a028702d678612384a6552404c636d15"
   dependencies:
@@ -4260,6 +4312,10 @@ mime-types@^2.1.12, mime-types@~2.1.17, mime-types@~2.1.7:
 mime@1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/mime/-/mime-1.4.1.tgz#121f9ebc49e3766f311a76e1fa1c8003c4b03aa6"
+
+mime@^1.4.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/mime/-/mime-1.6.0.tgz#32cd9e5c64553bd58d19a568af452acff04981b1"
 
 mimic-fn@^1.0.0:
   version "1.2.0"
