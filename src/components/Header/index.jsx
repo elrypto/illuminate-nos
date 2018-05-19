@@ -2,9 +2,17 @@ import React from "react";
 import injectSheet from "react-jss";
 import PropTypes from "prop-types";
 
+import { injectNOS } from "../../nos";
+
+import { NOSHeader } from "../NOSHeader"
+
 
 const styles = {
 };
+
+const neo = "c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b";
+const scriptHashNeoAuth = "2f228c37687d474d0a65d7d82d4ebf8a24a3fcbc";
+
 
 const Header = ({ classes, title }) => (
   <header>
@@ -22,12 +30,7 @@ const Header = ({ classes, title }) => (
           </div>
           <div class="col-sm-4 offset-md-1 py-4">
             <h4 class="text-white">"Me"</h4>
-            <ul class="list-unstyled">
-              <li><a href="#" class="text-white">Profile</a></li>
-              <li><a href="#" class="text-white">Site History</a></li>
-              <li class="text-white">Neo - Public Key - Balance </li>
-              <li class="text-white">Illi - Public Key - Balance</li>
-            </ul>
+            
           </div>
         </div>
       </div>
@@ -50,5 +53,8 @@ Header.propTypes = {
   classes: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired
 };
+
+
+
 
 export default injectSheet(styles)(Header);
