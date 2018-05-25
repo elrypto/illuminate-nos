@@ -42,3 +42,12 @@ footer p {
   width: 100px;
   height: 200px;
 }
+
+.footer-logo{
+  width: 20px;
+  height: 20px;
+}
+
+.btn{
+  margin: .25rem;
+}

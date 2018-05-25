@@ -2,7 +2,6 @@ import React from "react";
 import injectSheet from "react-jss";
 import PropTypes from "prop-types";
 
-
 const styles = {
 };
 
@@ -48,7 +47,7 @@ const Main = ({ classes, title }) => (
             <div class="card mb-4 box-shadow">
               <img class="card-img-top" src={require('/assets/course-java.png')} alt="Card image cap"/>
               <div class="card-body">
-                <p class="card-text">nOS or Neo dApps Expert</p>
+                <p class="card-text">Neo and nOS dApps Expert</p>
                 <p class="card-text">Design, Development Suggestions and Help resolving issues</p>
                 <p class="card-text">Rating: Not Yet</p>
                 <p class="card-text"># blockchain, nOS, Neo...</p>
@@ -69,7 +68,7 @@ const Main = ({ classes, title }) => (
               <img class="card-img-top" src={require('/assets/ellery-yoga-lessons.jpg')} alt="Card image cap"/>
               <div class="card-body">
                 <p class="card-text">Yoga postures private lessons</p>
-                <p class="card-text">Let me help you fix your postures, with private yoga sessions online</p>
+                <p class="card-text">Better yoga postures, with private yoga sessions online</p>
                 <p class="card-text">Rating: Not Yet</p>
                 <p class="card-text"># yoga, kundalini</p>
 
