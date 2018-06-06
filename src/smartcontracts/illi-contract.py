@@ -1,6 +1,11 @@
 
-def Main():
+from boa.blockchain.vm.Neo.Runtime import CheckWitness
 
-  print("ill-contract-run");
+def Main(caller):
+    print("ill-contract-run");
 
-  return True
+    isCaller = CheckWitness(caller)
+    if isCaller:
+        return True
+
+    return False
