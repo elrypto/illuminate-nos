@@ -89,7 +89,8 @@ class Header extends React.Component {
                   <ul class="list-unstyled">
                     <li><a href="#" class="text-white">Profile</a></li>
                     <li><a href="#" class="text-white">Site History</a></li>
-                    <li class="text-white">Neo - {this.state.neoLastBalance} </li>
+                    <li class="text-white">NEO - {this.state.neoLastBalance} ({this.state.neoAddress.substring(0,12) + "..."})</li>
+                    <li class="text-white">GAS - [this.state.gasLastBalance]</li>
                     <li class="text-white">Illi - [this.state.illiLastBalance]</li>
                   </ul>
 
