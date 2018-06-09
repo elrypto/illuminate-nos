@@ -9,7 +9,7 @@ def Main():
 
     trigger = GetTrigger()
 
-    if trigger == Verification()
+    if trigger == Verification():
         print("Running Verification!")
         is_owner = CheckWitness(OWNER)
 
@@ -20,30 +20,30 @@ def Main():
         print("Not Owner")
             return False
 
-    elsif trigger == Application()
+    elsif trigger == Application():
          print("Running Application!")
 
-          if not is_valid_addr(addr):
-              print("Not Valid Address")
-              return False
+    #      if not is_valid_addr(addr):
+#              print("Not Valid Address")
+              #return False
 
           ctx = GetContext()
 
-          if operation == 'add':
-              balance = Get(ctx, addr)
-              new_balance = balance + value
-              Put(ctx, addr, new_balance)
-              return new_balance
+          #if operation == 'add':
+        #      balance = Get(ctx, addr)
+        #      new_balance = balance + value
+    #          Put(ctx, addr, new_balance)
+    #          return new_balance
 
-          elif operation == 'remove':
-              balance = Get(ctx, addr)
-              Put(ctx, addr, balance - value)
-              return balance - value
+    #      elif operation == 'remove':
+    #          balance = Get(ctx, addr)
+    #          Put(ctx, addr, balance - value)
+    #          return balance - value
 
-          elif operation == 'balance':
-              return Get(ctx, addr)
+    #      elif operation == 'balance':
+    #          return Get(ctx, addr)
 
-          return False
+    #      return False
 
     return False
 
