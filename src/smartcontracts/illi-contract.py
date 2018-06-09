@@ -9,4 +9,7 @@ def Main():
 
     ctx = GetContext()
 
+    trigger = GetTrigger()
+    print("trigger:" + trigger)
+
     return True
