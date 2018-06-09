@@ -11,14 +11,14 @@ def Main():
 
     if trigger == Verification():
         print("Running Verification!")
-        is_owner = CheckWitness(OWNER)
+    #    is_owner = CheckWitness(OWNER)
 
-        if is_owner:
-            print("Is Owner!")
-            return True
+    #    if is_owner:
+    #        print("Is Owner!")
+#            return True
 
-        print("Not Owner")
-            return False
+#        print("Not Owner")
+#            return False
 
     elsif trigger == Application():
          print("Running Application!")
@@ -45,11 +45,11 @@ def Main():
 
     #      return False
 
-    return False
+    #return False
 
 
-def is_valid_addr(addr):
+#def is_valid_addr(addr):
 
-  if len(addr) == 20:
-      return True
-  return False
+  #if len(addr) == 20:
+    #  return True
+  #return False
