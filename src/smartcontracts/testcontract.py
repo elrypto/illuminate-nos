@@ -3,8 +3,8 @@ from boa.interop.Neo.Storage import Get,Put,Delete,GetContext
 def Main(operation, addr, value):
 
 
-    #if not is_valid_addr(addr):
-    #    return False
+    if not is_valid_addr(addr):
+        return False
 
     ctx = GetContext()
 
@@ -24,8 +24,8 @@ def Main(operation, addr, value):
 
     return False
 
-def is_valid_addr(addr):
 
+def is_valid_addr(addr):
     if len(addr) == 20:
         return True
     return False
