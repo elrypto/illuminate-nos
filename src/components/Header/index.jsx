@@ -1,8 +1,10 @@
 import React from "react";
 import injectSheet from "react-jss";
 import PropTypes from "prop-types";
-import { nosPropTypes } from "@nosplatform/api-functions/es6";
-import { injectNOS } from "../../nos";
+import { react } from "@nosplatform/api-functions";
+
+const { injectNOS, nosProps } = react.default;
+
 
 
 const styles = {
@@ -20,6 +22,7 @@ class Header extends React.Component {
     }
   }
 
+/*
   componentDidMount(){
     var p = [];
     var p2 = [];
@@ -50,7 +53,7 @@ class Header extends React.Component {
 
   handleGetAddress = async () => await this.props.nos.getAddress();
   handleGetBalance = async scriptHash => await this.props.nos.getBalance(scriptHash);
-
+*/
 
   render() {
     const { classes } = this.props;
@@ -89,7 +92,7 @@ class Header extends React.Component {
                   <ul class="list-unstyled">
                     <li><a href="#" class="text-white">Profile</a></li>
                     <li><a href="#" class="text-white">Site History</a></li>
-                    <li class="text-white">NEO - {this.state.neoLastBalance} ({this.state.neoAddress.substring(0,12) + "..."})</li>
+                    <li class="text-white">NEO - [this.state.neoLastBalance] ([this.state.neoAddress.substring(0,12) + "..."])</li>
                     <li class="text-white">GAS - [this.state.gasLastBalance]</li>
                     <li class="text-white">Illi - [this.state.illiLastBalance]</li>
                   </ul>
@@ -115,12 +118,9 @@ class Header extends React.Component {
   }
 }
 
-
 Header.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  nos: nosPropTypes.isRequired
+  nos: nosProps.isRequired
 };
-
-
 
 export default injectNOS(injectSheet(styles)(Header));

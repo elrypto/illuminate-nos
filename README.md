@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./logo.png" width="150px" /> 
+  <img src="./logo.png" width="150px" />
 </p>
 
 <h1 align="center">illuminate-nos</h1>
@@ -19,5 +19,3 @@
 
 ## Purpose
 The purpose of this project is to prove the concept of the Illuminate DApp on the nOS platform, which will be a cryptocurrency backed learning micro learning environment.
-
-
