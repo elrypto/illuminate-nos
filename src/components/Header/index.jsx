@@ -5,42 +5,27 @@ import { react } from "@nosplatform/api-functions";
 
 const { injectNOS, nosProps } = react.default;
 
-const styles = {
-};
+const styles = {};
 
 
 class Header extends React.Component {
+
   constructor(props){
     super(props);
-
     this.state = {
       neoAddress: "...",
-      neoLastBalance: 0.0,
-      scriptHash: "2f228c37687d474d0a65d7d82d4ebf8a24a3fcbc" //from NeoAuth, in nOS sample app
     }
   }
 
-
   componentDidMount(){
     var p = [];
-    var p2 = [];
     var val;
-    var val2;
 
     p.push(this.handleGetAddress());
-    p2.push(this.handleGetBalance(this.state.scriptHash));
-
     Promise.all(p).then(result => {
       val = result.toString();
       this.setState({
         neoAddress: val
-      })
-    });
-
-    Promise.all(p2).then(result => {
-      val2 = result;
-      this.setState({
-        neoLastBalance: val2
       })
     });
 
@@ -50,35 +35,10 @@ class Header extends React.Component {
 
 
   handleGetAddress = async () => await this.props.nos.getAddress();
-  handleGetBalance = async scriptHash => await this.props.nos.getBalance(scriptHash);
-
+//  handleGetBalance = async () => await this.props.nos.getBalance({ asset: neo });
 
   render() {
     const { classes, nos } = this.props;
-
-    const neo = "c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b";
-    const gas = "602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7";
-    const rpx = "ecc6b20d3ccac1ee9ef109af5a7cdb85706b1df9";
-
-    // Add your smart contract's scriptHash here
-    const scriptHash = "";
-
-    // The operation of your smart contract you want to (test)invoke
-    const operation = "";
-
-    // The necessary arguments for you (test)invoke
-    const args = [];
-
-    // The storagekey you want to query
-    const key = "";
-
-    // The amount and recipient of your send function
-    const recipient = "";
-    const amount = "";
-
-    const invoke = { scriptHash, operation, args }; // and testInvoke
-    const getStorage = { scriptHash, key };
-    const send = { amount, asset: gas, recipient };
 
     return (
       <React.Fragment>
@@ -100,9 +60,8 @@ class Header extends React.Component {
                   <ul class="list-unstyled">
                     <li><a href="#" class="text-white">Profile</a></li>
                     <li><a href="#" class="text-white">Site History</a></li>
-                    <li class="text-white">NEO - {this.state.neoLastBalance} ({this.state.neoAddress.substring(0,12) + "..."})</li>
-                    <li class="text-white">GAS - [this.state.gasLastBalance]</li>
-                    <li class="text-white">Illi - [this.state.illiLastBalance]</li>
+                    <li class="text-white">NEO Addr -  ({this.state.neoAddress.substring(0,12) + "..."})</li>
+                    <li class="text-white">Illi Addr - ("illi17LSvs...")</li>
                   </ul>
 
                 </div>

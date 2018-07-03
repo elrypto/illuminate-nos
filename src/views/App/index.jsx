@@ -3,8 +3,10 @@ import injectSheet from "react-jss";
 import PropTypes from "prop-types";
 
 import Header from "./../../components/Header";
-import Footer from "./../../components/Footer";
+import JumboTron from "./../../components/JumboTron";
 import Main from "./../../components/Main";
+import Footer from "./../../components/Footer";
+
 
 
 const styles = {
@@ -13,6 +15,8 @@ const styles = {
 const App = ({ classes }) => (
   <div className={classes.App}>
     <Header title="illuminate - nOS dapp (prototype)" />
+
+    <JumboTron />
 
     <Main title="illuminate" />
 
