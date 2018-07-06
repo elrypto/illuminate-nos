@@ -2,6 +2,7 @@ import React from "react";
 import injectSheet from "react-jss";
 import PropTypes from "prop-types";
 import { react } from "@nosplatform/api-functions";
+import BigCard from "./../BigCard";
 
 const { injectNOS, nosProps } = react.default;
 
@@ -11,23 +12,83 @@ const styles = {
 class Main extends React.Component {
   handleAlert = async func => alert(await func);
 
+  doFetchCards() {
+    return (
+      [
+       {
+        neo_addr: "",
+         service_name : "Chef Nick cooks with you",
+         description : "I will make dishes with you in real time",
+         rating : "Rating: Not Yet",
+         profile_link_out : "https://twitter.com/",
+         tags: "cooking, chef, cuisine",
+         provider_name : "Chef Nick L",
+         preferred_method : "1",
+         image_url: "/assets/match_resume_to_job.jpg",
+         std_lesson_duration: "0.25",
+         price_per_15 : "0.15",
+         num_lessons_delivered : "0"
+       },
+       {
+         neo_addr: "",
+         service_name : "Javasript Development Expert",
+         description : "Design, Development Suggestions and Help resolving issues",
+         rating : "Rating: Not Yet",
+         profile_link_out : "https://twitter.com/",
+         tags: "js, javascript, react, redux, angular, backbone",
+         provider_name : "Morpheus",
+         preferred_method : "2",
+         image_url: "/assets/course-java.png",
+         std_lesson_duration: "0.5",
+         price_per_15 : "0.15",
+         num_lessons_delivered : "0"
+       },
+       {
+         neo_addr: "",
+         service_name : "Yoga postures private lessons",
+         description : "Better yoga postures, with private yoga sessions onlinee",
+         rating : "Rating: Not Yet",
+         profile_link_out : "https://twitter.com/",
+         tags: "yoga, kundalini",
+         provider_name : "Savi Viens",
+         preferred_method : "1",
+         image_url: "/assets/ellery-yoga-lessons.jpg",
+         std_lesson_duration: "0.5",
+         price_per_15 : "0.3",
+         num_lessons_delivered : "0"
+       }
+     ]
+   )
+  }
+
   constructor(props){
     super(props);
     this.state = {
-      neoAddress: "...",
+      bigCards: []
     }
   }
 
-  componentDidMount(){}
+  componentDidMount(){
+    console.log("fetching cards...")
+    let fetchedCards = [];
+    fetchedCards = this.doFetchCards();
+    console.log("big cards fetched: " + fetchedCards.length)
+    this.setState({bigCards: fetchedCards})
+  }
 
 handleGetBalance = async () => await nos.getBalance({ asset: neo });
 handleGetAddress = async () => await nos.getAddress();
 
+
 render() {
   const { classes, nos } = this.props;
-
   const neo = "c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b";
 
+  /* TODO: retrieve from this.state
+   * workaround retrieves on every render, which is not efficient when
+   * hooked up to a real source (remote or blockchain)
+  */
+  let bigCards = this.doFetchCards();
 
   return(
   <React.Fragment>
@@ -36,68 +97,19 @@ render() {
       <div class="album py-5 bg-light">
         <div class="container">
           <div class="row">
-
-            <div class="col-md-4">
-              <div class="card mb-4 box-shadow">
-                <img class="card-img-top" src={require('/assets/match_resume_to_job.jpg')} alt="Card image cap"/>
-                <div class="card-body">
-                  <p class="card-text">Resume Fine Tuning</p>
-                  <p class="card-text">20 Year HR Professional, I will fix your resume</p>
-                  <p class="card-text">Rating: Not Yet</p>
-                  <p class="card-text"># careers, resume, HR</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Buy</button>
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Info</button>
-                    </div>
-                    <small class="text-muted">15 ILLI/.015 GAS</small>
-                    <small class="text-muted">15 mins</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card mb-4 box-shadow">
-                <img class="card-img-top" src={require('/assets/course-java.png')} alt="Card image cap"/>
-                <div class="card-body">
-                  <p class="card-text">Neo and nOS dApps Expert</p>
-                  <p class="card-text">Design, Development Suggestions and Help resolving issues</p>
-                  <p class="card-text">Rating: Not Yet</p>
-                  <p class="card-text"># blockchain, nOS, Neo...</p>
-
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Buy</button>
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Info</button>
-                    </div>
-                    <small class="text-muted">10 ILLI/.01 GAS</small>
-                    <small class="text-muted">5 mins</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card mb-4 box-shadow">
-                <img class="card-img-top" src={require('/assets/ellery-yoga-lessons.jpg')} alt="Card image cap"/>
-                <div class="card-body">
-                  <p class="card-text">Yoga postures private lessons</p>
-                  <p class="card-text">Better yoga postures, with private yoga sessions online</p>
-                  <p class="card-text">Rating: Not Yet</p>
-                  <p class="card-text"># yoga, kundalini</p>
-
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Buy</button>
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Info</button>
-                    </div>
-                    <small class="text-muted">5 ILLI/.005 GAS</small>
-                    <small class="text-muted">5 mins</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <p>balance: {this.handleGetAddress} </p>
+          {bigCards.map(function(card, i){
+              return <BigCard neo_addr={card.neo_addr}
+              service_name={card.service_name}
+              description={card.description}
+              rating={card.rating}
+              profile_link_out={card.profile_link_out}
+              tags={card.tags}
+              preferred_method={card.preferred_method}
+              image_url={card.image_url}
+              price_per_15={card.price_per_15}
+              std_lesson_duration={card.std_lesson_duration}
+              />;
+          })}
 
           </div>
         </div>
@@ -106,7 +118,7 @@ render() {
 
     </main>
   </React.Fragment>
-);
+  );
  }
 }
 
