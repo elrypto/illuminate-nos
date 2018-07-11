@@ -61,7 +61,6 @@ class Header extends React.Component {
                     <li><a href="#" class="text-white">Profile</a></li>
                     <li><a href="#" class="text-white">Site History</a></li>
                     <li class="text-white">NEO Addr -  ({this.state.neoAddress.substring(0,12) + "..."})</li>
-                    <li class="text-white">Illi Addr - ("illi17LSvs...")</li>
                   </ul>
 
                 </div>

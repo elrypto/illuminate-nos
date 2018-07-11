@@ -1,7 +1,7 @@
 {
-  "name": "nos-dapp",
+  "name": "illuminate-nos",
   "version": "1.0.0",
-  "description": "",
+  "description": "micro learning dapp on the nOS (http://github.com/nos/) platform",
   "scripts": {
     "build": "parcel build src/index.html",
     "precommit": "yarn lint",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nos/create-nos-dapp.git"
+    "url": "git+https://github.com/lrypto/illuminate-nos"
   },
   "license": "MIT",
   "keywords": [
@@ -26,11 +26,11 @@
     "HTML",
     "starter"
   ],
-  "author": "",
+  "author": "lrypto",
   "bugs": {
-    "url": "https://github.com/nos/create-nos-dapp/issues"
+    "url": "https://github.com/lrypto/illuminate-nos"
   },
-  "homepage": "https://github.com/nos/create-nos-dapp#readme",
+  "homepage": "https://github.com/lrypto/illuminate-nos#readme",
   "dependencies": {
     "@cityofzion/neon-js": "3.8.0",
     "@nosplatform/api-functions": "0.2.2",
