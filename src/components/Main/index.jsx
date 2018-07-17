@@ -101,19 +101,19 @@ render() {
       <div class="album py-5 bg-light">
         <div class="container">
           <div class="row">
-          {bigCards.map(function(card, i){
-              return <BigCard neo_addr={card.neo_addr}
-              service_name={card.service_name}
-              description={card.description}
-              rating={card.rating}
-              profile_link_out={card.profile_link_out}
-              tags={card.tags}
-              preferred_method={card.preferred_method}
-              image_url={card.image_url}
-              price_per_15={card.price_per_15}
-              std_lesson_duration={card.std_lesson_duration}
-              />;
-          })}
+            {bigCards.map(function(card, i){
+                return <BigCard neo_addr={card.neo_addr}
+                  service_name={card.service_name}
+                  description={card.description}
+                  rating={card.rating}
+                  profile_link_out={card.profile_link_out}
+                  tags={card.tags}
+                  preferred_method={card.preferred_method}
+                  image_url={card.image_url}
+                  price_per_15={card.price_per_15}
+                  std_lesson_duration={card.std_lesson_duration}
+                />;
+             })}
 
           </div>
         </div>
