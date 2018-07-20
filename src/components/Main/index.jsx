@@ -16,8 +16,7 @@ class Main extends React.Component {
     return (
       [
        {
-         ///"http://dx5vpyka4lqst.cloudfront.net/products/438457/images/full.jpeg"
-        neo_addr: "",
+         neo_addr: "Aaq1KrK33JmxyxH2arhkQKCh5ADbhCC2vJ",
          service_name : "Chef Elaine cooks with you",
          description : "I will make dishes with you in real time",
          rating : "Rating: Not Yet",
@@ -25,14 +24,13 @@ class Main extends React.Component {
          tags: "cooking, chef, cuisine",
          provider_name : "Chef Elaine L",
          preferred_method : "1",
-         //image_url: "/assets/match_resume_to_job.jpg",
          image_url: "http://oi50.tinypic.com/25oz9cp.jpg",
          std_lesson_duration: "0.25",
-         price_per_15 : "0.15",
+         price_per_15 : "2",
          num_lessons_delivered : "0"
        },
        {
-         neo_addr: "",
+         neo_addr: "AbsSTvoJzqvaejWVLdaaNSni21BnSS3JPT",
          service_name : "Javasript Development Expert",
          description : "Design, Development Suggestions and Help resolving issues",
          rating : "Rating: Not Yet",
@@ -40,25 +38,23 @@ class Main extends React.Component {
          tags: "js, javascript, react, angular...",
          provider_name : "Morpheus",
          preferred_method : "2",
-        // image_url: "/assets/course-java.png",
-        image_url: "http://oi47.tinypic.com/30b3b49.jpg",
+         image_url: "http://oi47.tinypic.com/30b3b49.jpg",
          std_lesson_duration: "0.5",
-         price_per_15 : "0.15",
+         price_per_15 : "3",
          num_lessons_delivered : "0"
        },
        {
-         neo_addr: "",
+         neo_addr: "ATR87sYboZLNiszb7Pk3PpPr26e41xigge",
          service_name : "Yoga postures private lessons",
-         description : "Better yoga postures, with private yoga sessions onlinee",
+         description : "Better yoga postures, with private yoga coaching online",
          rating : "Rating: Not Yet",
          profile_link_out : "https://twitter.com/",
          tags: "yoga, kundalini",
          provider_name : "Savi Viens",
          preferred_method : "1",
-         //image_url: "/assets/ellery-yoga-lessons.jpg",
          image_url: "http://oi40.tinypic.com/30wv9jd.jpg",
          std_lesson_duration: "0.5",
-         price_per_15 : "0.3",
+         price_per_15 : "1",
          num_lessons_delivered : "0"
        }
      ]
@@ -68,7 +64,11 @@ class Main extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      bigCards: []
+      bigCards: [],
+      neoAddress: "",
+      storageScriptHash: "",
+      gasBalance: "",
+      purchasedLessons: []
     }
   }
 
@@ -82,6 +82,7 @@ class Main extends React.Component {
 
 handleGetBalance = async () => await nos.getBalance({ asset: neo });
 handleGetAddress = async () => await nos.getAddress();
+
 
 
 render() {

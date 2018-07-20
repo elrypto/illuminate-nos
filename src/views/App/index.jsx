@@ -6,7 +6,7 @@ import Header from "./../../components/Header";
 import JumboTron from "./../../components/JumboTron";
 import Main from "./../../components/Main";
 import Footer from "./../../components/Footer";
-
+import NOSActions from "./../../components/NOSActions"
 
 
 const styles = {
