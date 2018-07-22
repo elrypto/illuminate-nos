@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./screenshot.jpg" width="150px" />
+  <img src="./screenshot.JPG" width="150px" />
 </p>
 
 <h1 align="center">illuminate-nos</h1>
