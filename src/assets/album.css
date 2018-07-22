@@ -51,3 +51,15 @@ footer p {
 .btn{
   margin: .25rem;
 }
+
+.card-text-service-name{
+  text-align: center;
+  font-weight: bold;
+}
+
+.card-text-descr{
+}
+
+.card-text-small{
+  font-size: small;
+}

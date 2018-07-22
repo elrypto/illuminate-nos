@@ -1,21 +1,30 @@
 <p align="center">
-  <img src="./logo.png" width="150px" />
+  <img src="./screenshot.jpg" width="150px" />
 </p>
 
 <h1 align="center">illuminate-nos</h1>
 
 <p align="center">
-  POC for the Illuminate DApp <strong>dApp</strong> on the <strong>nOS</strong> platform
-</p>
-
-<p align="center">
-  <a href="https://github.com/nos/dapp-starter-kit/releases">
-    <img src="https://img.shields.io/github/tag/nos/dapp-starter-kit.svg?style=flat">
-  </a>
-  <a href='https://github.com/prettier/prettier'>
-    <img src='https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat'>
-  </a>
+  illuminate is microlearning distributed application built on the the <strong>nOS</strong> platform.
 </p>
 
 ## Purpose
-The purpose of this project is to prove the concept of the Illuminate DApp on the nOS platform, which will be a cryptocurrency backed learning micro learning environment.
+illuminate is "the Microlessons community".Learn anything quickly with one on one instruction. Teach others and earn. All with crypto currencies.
+
+## Roadmap
+
+0.3
+- register users
+- lesson categories
+
+0.4
+- video in video lessons
+- optimize lessons (including share screen)
+
+0.5
+- ledger based transactions for purchases
+- video record (with mutual agreement) for later playback
+
+0.6
+- escrow and commissions
+- recommended categories for you

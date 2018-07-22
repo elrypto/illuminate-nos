@@ -2,13 +2,11 @@ import React from "react";
 import injectSheet from "react-jss";
 import PropTypes from "prop-types";
 const nos = window.NOS.V1;
-
+const LESSONS = "lessons_key";
 
 const styles = {
 };
 
-const funcDelay = 200;
-const trxDelay = 2500;
 const GAS = '602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7';
 
 
@@ -31,15 +29,17 @@ class BigCard extends React.Component {
 
 
   componentDidMount(){
+    //let lessons = [];
+    //lessons = JSON.parse(localStorage.getItem(LESSONS));
 
+    //for (l of lessons){
+    //  console.log(l.provider_addr);
+    //}
   }
 
 
   /*  TODO: Refactor
-   *  1. store (shared state like lessons, and address in react store)
-   *  2. NeoTransactionChain - component that will pump output
-   *  of last call into next call and wait for a delay between calls
-   *  and retry on "no next state"
+   *  1. store (shared state like lessons, and address in react store
    *
    */
 
@@ -64,7 +64,8 @@ class BigCard extends React.Component {
       user_addr: this.state.userNeoAddress,
       provider_addr: this.props.neo_addr,
       blockchain_trxn: this.state.purchase_trxn,
-      time_stamp: Date.now()
+      time_stamp: Date.now(),
+      state: "0"
     }
 
     lessons.push(JSON.stringify(lesson));
@@ -72,7 +73,7 @@ class BigCard extends React.Component {
     console.log("writing lessons to local provider addr" + lesson.provider_addr);
     console.log("writing lessons to trxn" + lesson.blockchain_trxn);
     console.log("writing lessons to time stamp" + lesson.time_stamp);
-    localStorage.setItem('lessons',JSON.stringify(lessons));
+    localStorage.setItem('lessons',JSON.stringify(LESSONS));
   }
 
 
@@ -125,8 +126,12 @@ class BigCard extends React.Component {
   }
 
 
-
 render() {
+
+  let startButton = "";
+  if (this.props.purchase_trxn){
+    startButton = <button type="button" class="btn btn-sm btn-outline-secondary">Start</button>
+  }
 
   return(
   <React.Fragment>
@@ -135,14 +140,14 @@ render() {
               <div class="card mb-4 box-shadow">
                 <img class="card-img-top" src={new String(this.props.image_url)} alt="Card image cap"/>
                 <div class="card-body">
-                  <p class="card-text">{this.props.service_name}</p>
-                  <p class="card-text">{this.props.description}</p>
-                  <p class="card-text">{this.props.rating}</p>
-                  <p class="card-text">#{this.props.tags}</p>
+                  <p class="card-text-service-name">{this.props.service_name}</p>
+                  <p class="card-text-descr">{this.props.description}</p>
+                  <p class="card-text-small">{this.props.rating}</p>
+                  <p class="card-text-small">#{this.props.tags}</p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
                       <button type="button" class="btn btn-sm btn-outline-secondary" onClick={this.handlePurchase.bind(this)}>Purchase Lesson</button>
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Info</button>
+                      {startButton}
                     </div>
                     <small class="text-muted">{this.props.price_per_15} GAS</small>
                   </div>
