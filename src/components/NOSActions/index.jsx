@@ -17,6 +17,31 @@ const styles = {
 
 class NOSActions extends React.Component {
 
+  constructor(props){
+    super(props);
+    this.addToStorage = this.addToStorage.bind(this);
+    this.getStorage = this.getStorage.bind(this);
+  }
+
+  addToStorage(){
+    console.log("addToStorage()");
+    let item = {a: "blah",
+            b: "blahblah"}
+    let items = JSON.parse(localStorage.getItem("myKEY"));
+    console.log("current items=" + items.length);
+    items.push(item);
+    console.log("adding..." + JSON.stringify(items))
+    localStorage.setItem("myKEY", JSON.stringify(items));
+  }
+
+  getStorage(){
+    let items = [];
+    items = JSON.parse(localStorage.getItem("myKEY"));
+    console.log("current size in localStorage:" + items.length);
+    console.log("current storage for myKEY:" + JSON.stringify(items));
+    console.log("testing a read on the first attibute on first item:" + items[0].a);
+  }
+
 
   handleAlert = async func => alert(await func);
 
@@ -52,7 +77,7 @@ class NOSActions extends React.Component {
    *
   */
   doSendGas(amount, receiver){
-    console.log("doSendGas()");
+  /*  console.log("doSendGas()");
     const nos = window.NOS.V1;
 
     const GAS = '602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7';
@@ -62,12 +87,12 @@ class NOSActions extends React.Component {
 
     nos.send({ asset: GAS, amount, receiver })
       .then((txid) => alert(`${amount} GAS sent in transaction ${txid}`))
-      .catch((err) => alert(`Error: ${err.message}`));
+      .catch((err) => alert(`Error: ${err.message}`));*/
   }
 
 
   doGetStorage(){
-    const nos = window.NOS.V1;
+/*    const nos = window.NOS.V1;
 
     const scriptHash = '85e9cc1f18fcebf9eb8211a128807e38d094542a';
     const key = 'post.latest';
@@ -76,7 +101,7 @@ class NOSActions extends React.Component {
     // nos.getStorage({ scriptHash, key, encodeInput: false, decodeOutput: false })
     nos.getStorage({ scriptHash, key })
         .then((data) => alert(`Get storage data: ${data} `))
-        .catch((err) => alert(`Error: ${err.message}`));
+        .catch((err) => alert(`Error: ${err.message}`));*/
   }
 
 
@@ -175,14 +200,14 @@ const { classes, nos } = this.props;
 
         <button
           className={classes.button}
-          onClick={() => this.handleAlert(localStorage.setItem("items",JSON.stringify("aaa")))}
+          onClick={this.addToStorage}
         >
-          Local Storage PUT
+          Add to Local
         </button>
 
         <button
           className={classes.button}
-          onClick={() => this.handleAlert(JSON.parse(localStorage.getItem("items")))}
+          onClick={this.getStorage}
         >
           Local Storage GET
         </button>

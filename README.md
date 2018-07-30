@@ -13,18 +13,30 @@ illuminate is "the Microlessons community".Learn anything quickly with one on on
 
 ## Roadmap
 
-0.3
-- register users
-- lesson categories
+0.3 - August 2018
+- nOS dapp POC
+- neoGAS purchases of Microlessons
+- modal video dialog sample (current nOS browser does not support userMedia)
 
 0.4
-- video in video lessons
-- optimize lessons (including share screen)
+- basic menuing (url router)
+- implementation/integration of nOS browser getUserMedia
+- video stream based lessons
 
 0.5
+- register lesson providers
+- lesson categories
+
+0.6
+- share your screen in lessons
+- video lesson refinements
+
+0.7
 - ledger based transactions for purchases
 - video record (with mutual agreement) for later playback
 
-0.6
+0.8
 - escrow and commissions
 - recommended categories for you
+- my lessons
+- see previously recorded (at a discount)

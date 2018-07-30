@@ -52,7 +52,7 @@ class Header extends React.Component {
                   you can find real people to teach you how to do anything. If you
                   have something to teach, you can earn from those willing to pay
                   for it. All payments are based on cryptocurrencies (like bitcoin),
-                  but we use our native utility token ILLI and the NEO token
+                  but we use the NeoGas (GAS) token.
                   . <a href="#" class="text-white">Why NEO?</a></p>
                 </div>
                 <div class="col-sm-4 offset-md-1 py-4">

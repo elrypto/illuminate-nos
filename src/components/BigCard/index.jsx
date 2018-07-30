@@ -1,16 +1,31 @@
 import React from "react";
 import injectSheet from "react-jss";
 import PropTypes from "prop-types";
+import Modal from 'react-modal';
 const nos = window.NOS.V1;
-const LESSONS = "lessons_key";
 
-const styles = {
+//import { react } from "@nosplatform/api-functions";
+
+const LESSONS_KEY = "__lesson_key_illi";
+const GAS = '602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7';
+const styles = {};
+
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)'
+  }
 };
 
-const GAS = '602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7';
 
+Modal.setAppElement('#root');
 
 class BigCard extends React.Component {
+
 
   constructor(props) {
     super(props);
@@ -18,24 +33,61 @@ class BigCard extends React.Component {
     this.getBalance = this.getBalance.bind(this);
     this.doPurchaseTrxn= this.doPurchaseTrxn.bind(this);
     this.ledgerTrxn= this.ledgerTrxn.bind(this);
-
+    this.purchaseCheck = this.purchaseCheck.bind(this);
 
     this.state = {
       userNeoAddress: "",
       gasBalance: -1,
-      purchase_trxn: ""
+      purchase_trxn: "",
+      purchased: false,
+      modalIsOpen: false
     }
+    this.openModal = this.openModal.bind(this);
+    this.afterOpenModal = this.afterOpenModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.purchaseCheck();
+  }
+
+  openModal() {
+    this.setState({modalIsOpen: true});
+  }
+
+  afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    this.subtitle.style.color = '#f00';
+  }
+
+  closeModal() {
+    this.setState({modalIsOpen: false});
   }
 
 
-  componentDidMount(){
-    //let lessons = [];
-    //lessons = JSON.parse(localStorage.getItem(LESSONS));
+  purchaseCheck(){
+    let lessons = []
+    let storedLessons = JSON.parse(localStorage.getItem("illi-lessons"));
 
-    //for (l of lessons){
-    //  console.log(l.provider_addr);
-    //}
+    if (storedLessons != null){
+      lessons = storedLessons;
+    }
+
+    let l = null;
+//    console.log ("lessons purchased by all providers:" + lessons.length);
+//    console.log("lessons:" + JSON.stringify(lessons));
+    for (l in lessons){
+
+        /* check for a lesson purchased*/
+        if (new String(this.props.neo_addr).valueOf()===new String(lessons[l].provider_addr).valueOf()){
+            /* make sure its not been used */
+            //console.log("matched neo addr, state:" + lessons[l].state);
+            if (lessons[l].state==="0"){
+              this.state.purchased = true;
+            }
+        }
+    }
+
   }
+
+  componentDidMount(){}
 
 
   /*  TODO: Refactor
@@ -45,6 +97,8 @@ class BigCard extends React.Component {
 
   // *** 4/4
   ledgerTrxn(trxId){
+    trxId = "dkjjew9r033u2j2jlwjreTEST";
+
     alert(`${this.props.price_per_15} GAS sent in transaction ${trxId}.
       The lesson has been purchased. It may take up to an hour for the
       lesson to be available. When it is ready you will see a start button.`);
@@ -56,24 +110,27 @@ class BigCard extends React.Component {
      /** TODO: use setState() **/
      this.state.purchase_trxn = trxId;
 
-    let lessons = [];
-    //get lessons
-    //lessons = JSON.parse(localStorage.getItem(('lessons')))
+     let lessons = []
+     let storedLessons = JSON.parse(localStorage.getItem("illi-lessons"));
 
-    let lesson = {
-      user_addr: this.state.userNeoAddress,
-      provider_addr: this.props.neo_addr,
-      blockchain_trxn: this.state.purchase_trxn,
-      time_stamp: Date.now(),
-      state: "0"
-    }
+     if (storedLessons != null){
+       lessons = storedLessons;
+     }
 
-    lessons.push(JSON.stringify(lesson));
-    console.log("writing lessons to local user addr" + lesson.user_addr);
-    console.log("writing lessons to local provider addr" + lesson.provider_addr);
-    console.log("writing lessons to trxn" + lesson.blockchain_trxn);
-    console.log("writing lessons to time stamp" + lesson.time_stamp);
-    localStorage.setItem('lessons',JSON.stringify(LESSONS));
+      let lesson = {
+        user_addr: this.state.userNeoAddress,
+        provider_addr: this.props.neo_addr,
+        blockchain_trxn: this.state.purchase_trxn,
+        time_stamp: Date.now(),
+        state: "0"
+      }
+
+    lessons.push(lesson);
+//    console.log("writing lesson to local user addr:" + lesson.user_addr);
+//    console.log("writing lesson to local provider addr:" + lesson.provider_addr);
+//    console.log("writing lesson to trxn:" + lesson.blockchain_trxn);
+//    console.log("writing lesson to time stamp:" + lesson.time_stamp);
+    localStorage.setItem("illi-lessons",JSON.stringify(lessons));
   }
 
 
@@ -129,8 +186,9 @@ class BigCard extends React.Component {
 render() {
 
   let startButton = "";
-  if (this.props.purchase_trxn){
-    startButton = <button type="button" class="btn btn-sm btn-outline-secondary">Start</button>
+  console.log("purchased:" + this.state.purchased)
+  if (this.state.purchased===true){
+    startButton = <button id="startButton" onClick={this.openModal} type="button" class="btn btn-sm btn-outline-secondary">Start</button>
   }
 
   return(
@@ -146,13 +204,32 @@ render() {
                   <p class="card-text-small">#{this.props.tags}</p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary" onClick={this.handlePurchase.bind(this)}>Purchase Lesson</button>
+                      <button id="purchaseButton" disabled={this.state.purchased} type="button" class="btn btn-sm btn-outline-secondary" onClick={this.handlePurchase.bind(this)}>Purchase Lesson</button>
                       {startButton}
                     </div>
                     <small class="text-muted">{this.props.price_per_15} GAS</small>
                   </div>
                 </div>
               </div>
+              <Modal
+                isOpen={this.state.modalIsOpen}
+                onAfterOpen={this.afterOpenModal}
+                onRequestClose={this.closeModal}
+                style={customStyles}
+                contentLabel="Example Modal"
+              >
+
+                <h2 ref={subtitle => this.subtitle = subtitle}>Hello</h2>
+                <button onClick={this.closeModal}>close</button>
+                <div>I am a modal</div>
+                <form>
+                  <input />
+                  <button>tab navigation</button>
+                  <button>stays</button>
+                  <button>inside</button>
+                  <button>the modal</button>
+                </form>
+              </Modal>
             </div>
 
   </React.Fragment>
