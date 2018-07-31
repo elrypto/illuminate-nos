@@ -63,3 +63,7 @@ footer p {
 .card-text-small{
   font-size: small;
 }
+
+.card-input{
+  margin-top: .5rem;
+}

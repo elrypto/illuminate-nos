@@ -16,7 +16,7 @@ class Main extends React.Component {
     return (
       [
        {
-         neo_addr: "Aaq1KrK33JmxyxH2arhkQKCh5ADbhCC2vJ",
+         neo_addr: "APoMzFBan1VDUpjg5sAHVppCTSp5cu99aJ",
          service_name : "Chef Elaine cooks with you",
          description : "I will make dishes with you in real time, pick a recipe",
          rating : "Rating: Not Yet",
@@ -30,7 +30,7 @@ class Main extends React.Component {
          num_lessons_delivered : "0"
        },
        {
-         neo_addr: "AbsSTvoJzqvaejWVLdaaNSni21BnSS3JPT",
+         neo_addr: "AX4x3vN1vxoG2ZNru2dKv4GRb8uztaqvjE",
          service_name : "Javasript Development Expert",
          description : "Design/Dev Suggestions and Coding Help",
          rating : "Rating: Not Yet",
@@ -44,7 +44,7 @@ class Main extends React.Component {
          num_lessons_delivered : "0"
        },
        {
-         neo_addr: "ATR87sYboZLNiszb7Pk3PpPr26e41xigge",
+         neo_addr: "Ae48Ryb6wkZ7NpR6TXyLTRhPEmH2HKdQ1F",
          service_name : "Yoga postures private lessons",
          description : "Better yoga postures, with private yoga coaching online",
          rating : "Rating: Not Yet",

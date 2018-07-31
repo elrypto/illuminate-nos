@@ -216,25 +216,27 @@ render() {
                 onAfterOpen={this.afterOpenModal}
                 onRequestClose={this.closeModal}
                 style={customStyles}
-                contentLabel="Example Modal"
+                contentLabel="illuminate - live video lesson"
               >
-
-                <h2 ref={subtitle => this.subtitle = subtitle}>Hello</h2>
-                <button onClick={this.closeModal}>close</button>
-                <div>I am a modal</div>
-                <form>
-                  <input />
-                  <button>tab navigation</button>
-                  <button>stays</button>
-                  <button>inside</button>
-                  <button>the modal</button>
-                </form>
+              <div class="card mb-4 box-shadow">
+                  <div>
+                    <button class="btn btn-sm btn-outline-secondary" onClick={this.closeModal}>close</button>
+                    <button class="btn btn-sm btn-outline-secondary" onClick="">share screen</button>
+                  </div>
+                  <h2 ref={subtitle => this.subtitle = subtitle}>coming soon (with nOS media support)</h2>
+                  <img class="card-img-top" src={require('/assets/video_screenshot.JPG')} />
+                <div class="card-body">
+                  <input id="inbx" class="card-input" size="50" type="text"/>
+                  <button class="btn btn-sm btn-outline-secondary" onClick="">send message</button>
+                  <br/>
+                  <textarea rows="6" cols="80">Chef Elaine: What do you want to cook together today?</textarea>
+                </div>
+              </div>
               </Modal>
             </div>
 
   </React.Fragment>
-);
- }
+  );}
 }
 
 BigCard.propTypes = {
