@@ -12,15 +12,7 @@ def Main(operation, addr, value):
     ctx = GetContext()
 
     if operation == 'add':
-        balance = Get(ctx, addr)
-        new_balance = balance + value
-        Put(ctx, addr, new_balance)
-        return new_balance
-
-    elif operation == 'remove':
-        balance = Get(ctx, addr)
-        Put(ctx, addr, balance - value)
-        return balance - value
+        Put(ctx, addr, value)
 
     elif operation == 'balance':
         return Get(ctx, addr)
