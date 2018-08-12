@@ -2,6 +2,7 @@ import React from "react";
 import injectSheet from "react-jss";
 import PropTypes from "prop-types";
 import Modal from 'react-modal';
+import StarRatingComponent from 'react-star-rating-component';
 const nos = window.NOS.V1;
 
 //import { react } from "@nosplatform/api-functions";
@@ -40,13 +41,20 @@ class BigCard extends React.Component {
       gasBalance: -1,
       purchase_trxn: "",
       purchased: false,
-      modalIsOpen: false
+      modalIsOpen: false,
+      rating: 0
     }
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.onStarClick = this.onStarClick.bind(this);
     this.purchaseCheck();
   }
+
+  onStarClick(nextValue, prevValue, name) {
+      console.log("rating click()")
+      this.setState({rating: nextValue});
+    }
 
   openModal() {
     this.setState({modalIsOpen: true});
@@ -185,6 +193,8 @@ class BigCard extends React.Component {
 
 render() {
 
+  const { rating } = this.state;
+
   let startButton = "";
   console.log("purchased:" + this.state.purchased)
   if (this.state.purchased===true){
@@ -231,6 +241,15 @@ render() {
                   <br/>
                   <textarea rows="6" cols="80">Chef Elaine: What do you want to cook together today?</textarea>
                 </div>
+                 <div >
+                   <p>Rate your lesson:</p>
+                   <StarRatingComponent
+                      name="rate1"
+                      starCount={5}
+                      value={rating}
+                      onStarClick={this.onStarClick.bind(this)}
+                    />
+                 </div>
               </div>
               </Modal>
             </div>
