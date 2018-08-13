@@ -44,12 +44,22 @@ class BigCard extends React.Component {
       modalIsOpen: false,
       rating: 0
     }
+    /* bind methods */
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.onStarClick = this.onStarClick.bind(this);
+    this.ledgerRating = this.ledgerRating.bind(this);
+
+    /* check if items are purchased */
     this.purchaseCheck();
   }
+
+
+  ledgerRating(){
+    console.log("ledgerRating() rating of:" + this.state.rating);
+  }
+
 
   onStarClick(nextValue, prevValue, name) {
       console.log("rating click() set to:" + nextValue);
@@ -249,6 +259,7 @@ render() {
                       value={rating}
                       onStarClick={this.onStarClick.bind(this)}
                     />
+                    <button class="btn btn-sm btn-outline-secondary" onClick={this.ledgerRating}>save rating</button>
                  </div>
               </div>
               </Modal>
