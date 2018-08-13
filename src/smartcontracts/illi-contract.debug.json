@@ -1,0 +1,113 @@
+{
+    "avm": {
+        "name": "illi-contract",
+        "hash": "3801a054e0ad4e59acd00ac8423c0512"
+    },
+    "compiler": {
+        "name": "neo-boa",
+        "version": "0.4.0"
+    },
+    "files": [
+        {
+            "id": 1,
+            "url": "/neo-python/illuminate-nos/src/smartcontracts/illi-contract.py"
+        }
+    ],
+    "map": [
+        {
+            "start": 18,
+            "end": 51,
+            "file": 1,
+            "method": "Main",
+            "line": 2,
+            "file_line_no": 7
+        },
+        {
+            "start": 52,
+            "end": 60,
+            "file": 1,
+            "method": "Main",
+            "line": 4,
+            "file_line_no": 9
+        },
+        {
+            "start": 61,
+            "end": 65,
+            "file": 1,
+            "method": "Main",
+            "line": 5,
+            "file_line_no": 10
+        },
+        {
+            "start": 66,
+            "end": 95,
+            "file": 1,
+            "method": "Main",
+            "line": 7,
+            "file_line_no": 12
+        },
+        {
+            "start": 96,
+            "end": 106,
+            "file": 1,
+            "method": "Main",
+            "line": 9,
+            "file_line_no": 14
+        },
+        {
+            "start": 107,
+            "end": 139,
+            "file": 1,
+            "method": "Main",
+            "line": 10,
+            "file_line_no": 15
+        },
+        {
+            "start": 140,
+            "end": 154,
+            "file": 1,
+            "method": "Main",
+            "line": 12,
+            "file_line_no": 17
+        },
+        {
+            "start": 155,
+            "end": 183,
+            "file": 1,
+            "method": "Main",
+            "line": 13,
+            "file_line_no": 18
+        },
+        {
+            "start": 184,
+            "end": 195,
+            "file": 1,
+            "method": "is_valid_addr",
+            "line": 15,
+            "file_line_no": 37
+        },
+        {
+            "start": 196,
+            "end": 205,
+            "file": 1,
+            "method": "is_valid_addr",
+            "line": 2,
+            "file_line_no": 24
+        },
+        {
+            "start": 206,
+            "end": 210,
+            "file": 1,
+            "method": "is_valid_addr",
+            "line": 3,
+            "file_line_no": 25
+        },
+        {
+            "start": 211,
+            "end": 214,
+            "file": 1,
+            "line": 4
+        }
+    ],
+    "breakpoints": []
+}
