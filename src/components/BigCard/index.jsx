@@ -52,7 +52,7 @@ class BigCard extends React.Component {
   }
 
   onStarClick(nextValue, prevValue, name) {
-      console.log("rating click()")
+      console.log("rating click() set to:" + nextValue);
       this.setState({rating: nextValue});
     }
 
