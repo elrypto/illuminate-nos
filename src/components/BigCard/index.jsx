@@ -11,6 +11,14 @@ const LESSONS_KEY = "__lesson_key_illi";
 const GAS = '602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7';
 const styles = {};
 
+/* ILLI contract */
+const scriptHash = "73d0441485cb0cf1bdde4eb1c3133fe107693744";
+//const addOp = "add";
+//have to add to back of add array the ipfs hash to put on blockchain
+//const addArgs = ["add", "AH33ibNoxCAxu3eTaEDwvyiG7mHsEn7zX7"];
+
+
+
 const customStyles = {
   content : {
     top                   : '50%',
@@ -30,11 +38,6 @@ class BigCard extends React.Component {
 
   constructor(props) {
     super(props);
-    this.handlePurchase = this.handlePurchase.bind(this);
-    this.getBalance = this.getBalance.bind(this);
-    this.doPurchaseTrxn= this.doPurchaseTrxn.bind(this);
-    this.ledgerTrxn= this.ledgerTrxn.bind(this);
-    this.purchaseCheck = this.purchaseCheck.bind(this);
 
     this.state = {
       userNeoAddress: "",
@@ -42,24 +45,135 @@ class BigCard extends React.Component {
       purchase_trxn: "",
       purchased: false,
       modalIsOpen: false,
-      rating: 0
+      rating: 0,
+      rating_tree: null,
+      avg_user_rating: 0
     }
+
     /* bind methods */
+    this.handlePurchase = this.handlePurchase.bind(this);
+    this.getBalance = this.getBalance.bind(this);
+    this.doPurchaseTrxn= this.doPurchaseTrxn.bind(this);
+    this.ledgerTrxn= this.ledgerTrxn.bind(this);
+    this.purchaseCheck = this.purchaseCheck.bind(this);
+    this.calculateNewRating = this.calculateNewRating.bind(this);
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.onStarClick = this.onStarClick.bind(this);
     this.ledgerRating = this.ledgerRating.bind(this);
+    this.calculateNewRating = this.calculateNewRating.bind(this);
+    this.updateRating = this.updateRating.bind(this);
+    this.processRetrieve = this.processRetrieve.bind(this);
+    this.saveNewTree = this.saveNewTree.bind(this);
+    this.addIPFSKeytoBlockchain = this.addIPFSKeytoBlockchain.bind(this);
+    this.ratingsCheck = this.ratingsCheck.bind(this);
+    this.processStartupRetrieve = this.processStartupRetrieve.bind(this);
+    this.processTreeOnStartup = this.processTreeOnStartup.bind(this);
 
     /* check if items are purchased */
     this.purchaseCheck();
+    this.ratingsCheck();
   }
 
 
   ledgerRating(){
     console.log("ledgerRating() rating of:" + this.state.rating);
+    const operation = "balance";
+    const args = ["balance", "AH33ibNoxCAxu3eTaEDwvyiG7mHsEn7zX7"];
+    const scriptHash = '73d0441485cb0cf1bdde4eb1c3133fe107693744';
+    const key = 'AH33ibNoxCAxu3eTaEDwvyiG7mHsEn7zX7';
+    const static_rating_key = "QmXfYSWqDFoJpoYLnw1DavKHWmywd2CZ3eMZ45t2cVaKfx"; //workaround if getstorage does not return val
+
+    //on error use the static rating object (nothing in blockchain yet)
+    nos.getStorage({ scriptHash, key })
+        .then((data) => this.updateRating(data))
+        .catch((err) => this.updateRating(static_rating_key));
+    }
+
+
+  updateRating(ipfskey){
+    console.log("updateRating with key:" + ipfskey);
+
+    //pull rating tree from ipfs
+    var ipfs = IpfsApi('ipfs.infura.io', '5001', {protocol: 'https'});
+    ipfs.files.get(ipfskey, this.processRetrieve);
   }
 
+  processRetrieve(err, files) {
+    files.forEach((file) => {
+      let result = file.content.toString('utf8');
+      //console.log(JSON.stringify(result));
+      let returnedJSON = JSON.parse(result);
+      //console.log("PARSED JSON=");
+    //  console.log(JSON.stringify(returnedJSON));
+      this.state.rating_tree = returnedJSON;
+
+      this.calculateNewRating(returnedJSON);
+      })
+  }
+
+  calculateNewRating(jsonTree){
+    console.log("calculateNewRating()")
+    console.log(JSON.stringify(jsonTree));
+
+    jsonTree.forEach((rating_obj) => {
+      console.log("rating_obj.neo_addr:" + rating_obj.neo_addr);
+        if (new String(this.props.neo_addr).valueOf()===new String(rating_obj.neo_addr).valueOf()){
+          console.log("matched rating objects for this address:" + this.props.neo_addr);
+
+          let raw_rating = {
+            user_neo_addr: this.props.user_neo_addr,
+            rating: this.state.rating,
+            notes: "",
+            timestamp: ""
+          }
+
+          rating_obj.raw_ratings.push(raw_rating);
+
+          let this_rating = this.state.rating;
+          let current_avg_rating = rating_obj.avg_rating;
+          let num_ratings = rating_obj.raw_ratings.length;
+          let  new_avg = ((current_avg_rating * num_ratings) +
+                    this_rating) / (num_ratings + 1)
+
+          rating_obj.avg_rating = new_avg;
+
+          console.log("current_avg_rating:" + current_avg_rating);
+          console.log("num_ratings:" + num_ratings);
+          console.log("new avg:" + new_avg);
+
+          this.saveNewTree(jsonTree);
+        }
+    })
+  }
+
+  saveNewTree(jsonRatingTree){
+    console.log("saving updated json to ipfs" + JSON.stringify(jsonRatingTree));
+
+    var ifpsBuffer = Buffer.from(JSON.stringify(jsonRatingTree));
+    var ipfs = IpfsApi('ipfs.infura.io', '5001', {protocol: 'https'});
+
+    ipfs.add([ifpsBuffer], {pin:false})
+            .then(response => {
+                this.addIPFSKeytoBlockchain(response[0].hash);
+            }).catch((err) => {
+                alert(err);
+            });
+  }
+
+  /* save ipfs key to block */
+  addIPFSKeytoBlockchain(hash){
+    console.log("adding ipfs hash to blockchain:" + JSON.stringify(hash));
+
+    const scriptHash = "73d0441485cb0cf1bdde4eb1c3133fe107693744";
+    //const operation = "616464"
+    const operation = "add";
+    const args = ["add", "AH33ibNoxCAxu3eTaEDwvyiG7mHsEn7zX7", {hash}];
+    nos.invoke({scriptHash, operation, args})
+        .then((txid) => alert(`Rating saved to blockchain txid: ${txid} `))
+        .catch((err) => alert(`Error: ${err.message}`));
+  }
 
   onStarClick(nextValue, prevValue, name) {
       console.log("rating click() set to:" + nextValue);
@@ -105,12 +219,61 @@ class BigCard extends React.Component {
 
   }
 
+  /* ugh.... TODO: refactor with a single retrieve, this is a mess
+  * (also switch out of these method chains things!!!)
+  */
+  ratingsCheck(){
+    //need to grab key from blockchain
+    const key = 'QmXfYSWqDFoJpoYLnw1DavKHWmywd2CZ3eMZ45t2cVaKfx';
+      /*  const scriptHash = '73d0441485cb0cf1bdde4eb1c3133fe107693744';
+        const key = 'AH33ibNoxCAxu3eTaEDwvyiG7mHsEn7zX7';
+        const static_rating_key = "QmXfYSWqDFoJpoYLnw1DavKHWmywd2CZ3eMZ45t2cVaKfx"; //workaround if getstorage does not return val
+
+        //on error use the static rating object (nothing in blockchain yet)
+        nos.getStorage({ scriptHash, key })
+            .then((data) => this.updateRating(data))
+            .catch((err) => this.updateRating(static_rating_key));
+        }*/
+
+    //get ratings from IpfsApi
+    var ipfs = IpfsApi('ipfs.infura.io', '5001', {protocol: 'https'});
+    ipfs.files.get(key, this.processStartupRetrieve);
+  }
+
+  processStartupRetrieve(err, files){
+    files.forEach((file) => {
+      let result = file.content.toString('utf8');
+      let returnedJSON = JSON.parse(result);
+      this.state.rating_tree = returnedJSON;
+      this.processTreeOnStartup(returnedJSON);
+    })
+  }
+
+
+  processTreeOnStartup(jsonTree){
+    console.log("processTreeOnStartup()")
+    console.log(JSON.stringify(jsonTree));
+
+    jsonTree.forEach((rating_obj) => {
+      console.log("rating_obj.neo_addr:" + rating_obj.neo_addr);
+        if (new String(this.props.neo_addr).valueOf()===new String(rating_obj.neo_addr).valueOf()){
+          console.log("matched rating objects for this address:" + this.props.neo_addr);
+          this.state.avg_user_rating = rating_obj.avg_rating;
+          console.log("avg rating set to:" + this.state.avg_user_rating);
+        }
+    })
+  }
+
+
   componentDidMount(){}
 
 
   /*  TODO: Refactor
    *  1. store (shared state like lessons, and address in react store
+   *  2. way more MODULAR,... method chains should have pure methods with returns
+   *  3. use setState{}
    *
+   *  Ledger Trx + IPFS for ratings both have same form - ipfs + blockchain
    */
 
   // *** 4/4
@@ -211,6 +374,8 @@ render() {
     startButton = <button id="startButton" onClick={this.openModal} type="button" class="btn btn-sm btn-outline-secondary">Start</button>
   }
 
+  console.log("avg user rating:" + this.state.avg_user_rating);
+
   return(
   <React.Fragment>
 
@@ -220,7 +385,12 @@ render() {
                 <div class="card-body">
                   <p class="card-text-service-name">{this.props.service_name}</p>
                   <p class="card-text-descr">{this.props.description}</p>
-                  <p class="card-text-small">{this.props.rating}</p>
+                  <StarRatingComponent
+                     name="rate2"
+                     starCount={5}
+                     editing={false}
+                     value={this.state.avg_user_rating}
+                   />
                   <p class="card-text-small">#{this.props.tags}</p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
