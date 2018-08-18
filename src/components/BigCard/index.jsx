@@ -3,16 +3,20 @@ import injectSheet from "react-jss";
 import PropTypes from "prop-types";
 import Modal from 'react-modal';
 import StarRatingComponent from 'react-star-rating-component';
+import {u, wallet, sc, Neon} from "@cityofzion/neon-js";
+
+
 const nos = window.NOS.V1;
 
 //import { react } from "@nosplatform/api-functions";
 
 const LESSONS_KEY = "__lesson_key_illi";
+const RATINGS_KEY = 'AH33ibNoxCAxu3eTaEDwvyiG7mHsEn7zX7';
 const GAS = '602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7';
 const styles = {};
 
 /* ILLI contract */
-const scriptHash = "2e45f2c1a8d6f43e49923446d475544524e99c24";
+const scriptHash = "702088b5641bbf44c79bcea70659f40ad9a28aa0";
 //const addOp = "add";
 //have to add to back of add array the ipfs hash to put on blockchain
 //const addArgs = ["add", "AH33ibNoxCAxu3eTaEDwvyiG7mHsEn7zX7"];
@@ -81,12 +85,10 @@ class BigCard extends React.Component {
     console.log("ledgerRating() rating of:" + this.state.rating);
     const operation = "balance";
     const args = ["balance", "AH33ibNoxCAxu3eTaEDwvyiG7mHsEn7zX7"];
-    const scriptHash = '73d0441485cb0cf1bdde4eb1c3133fe107693744';
-    const key = 'AH33ibNoxCAxu3eTaEDwvyiG7mHsEn7zX7';
     const static_rating_key = "QmXfYSWqDFoJpoYLnw1DavKHWmywd2CZ3eMZ45t2cVaKfx"; //workaround if getstorage does not return val
 
     //on error use the static rating object (nothing in blockchain yet)
-    nos.getStorage({ scriptHash, key })
+    nos.getStorage({ scriptHash, RATINGS_KEY })
         .then((data) => this.updateRating(data))
         .catch((err) => this.updateRating(static_rating_key));
     }
@@ -166,10 +168,8 @@ class BigCard extends React.Component {
   addIPFSKeytoBlockchain(hash){
     console.log("adding ipfs hash to blockchain:" + JSON.stringify(hash));
 
-    const scriptHash = "73d0441485cb0cf1bdde4eb1c3133fe107693744";
-    //const operation = "616464"
-    const operation = "add";
-    const args = ["add", "AH33ibNoxCAxu3eTaEDwvyiG7mHsEn7zX7", {hash}];
+    const operation = "Save";
+    const args = [RATINGS_KEY, hash];
     nos.invoke({scriptHash, operation, args})
         .then((txid) => alert(`Rating saved to blockchain txid: ${txid} `))
         .catch((err) => alert(`Error: ${err.message}`));
