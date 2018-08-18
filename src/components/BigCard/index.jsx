@@ -12,7 +12,7 @@ const GAS = '602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7';
 const styles = {};
 
 /* ILLI contract */
-const scriptHash = "73d0441485cb0cf1bdde4eb1c3133fe107693744";
+const scriptHash = "2e45f2c1a8d6f43e49923446d475544524e99c24";
 //const addOp = "add";
 //have to add to back of add array the ipfs hash to put on blockchain
 //const addArgs = ["add", "AH33ibNoxCAxu3eTaEDwvyiG7mHsEn7zX7"];
