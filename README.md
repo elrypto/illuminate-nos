@@ -9,7 +9,7 @@
 </p>
 
 ## Purpose
-illuminate is "the Microlessons community".Learn anything quickly with one on one instruction. Teach others and earn. All with crypto currencies.
+illuminate is "the Microlessons community". Learn anything quickly with one on one instruction. Teach others and earn. All with crypto currencies.
 
 ## Roadmap
 
