@@ -44,7 +44,7 @@ def Main(operation, args):
         print("Put")
         Put(GetContext(), blockchain_key, blockchain_value)
         return True
-    if operation == "Get":
+    if operation == 'Get':
         print("Get")
         Get(GetContext(), blockchain_key)
         return True
