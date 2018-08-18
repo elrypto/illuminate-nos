@@ -16,18 +16,17 @@ def Main(operation, args):
     :type operation: str
 
     :param args: list of arguments.
-    args[0] is always sender script hash
-    args[1] is a key for a value (likely a key to ipfs)
-    args[2] is the value to be stored (likely ipfs hash)
+        args[0] is always sender script hash
+        args[1] is a key for a value (likely a key to ipfs)
+        args[2] is the value to be stored (likely ipfs hash)
     :param type: str
 
     :return:
-    byterarray: The result of the operation
+        byterarray: The result of the operation
     """
 
 
     print("checking if authorized")
-
     # Am I who I say I am?
     user_hash = args[0]
     authorized = CheckWitness(user_hash)
@@ -40,14 +39,15 @@ def Main(operation, args):
     blockchain_key = args[1]
 
     if operation == 'Put':
-        print("Put")
+        print("operation = Put()")
         blockchain_value = args[2]
         Put(GetContext(), blockchain_key, blockchain_value)
         return True
     if operation == 'Get':
-        print("Get")
-        Get(GetContext(), blockchain_key)
-        return True
+        print("operation = Get()")
+        stored_value = Get(GetContext(), blockchain_key)
+        if stored_value:
+            return stored_value
 
     return False
 
