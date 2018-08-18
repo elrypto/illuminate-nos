@@ -9,21 +9,21 @@ Based on @deanpress' https://github.com/deanpress/neosense
 
 def Main(operation, args):
 
-"""
-Main definition for the smart contracts
+    """
+    Main definition for the smart contracts
 
-:param operation: the operation to be performed
-:type operation: str
+    :param operation: the operation to be performed
+    :type operation: str
 
-:param args: list of arguments.
+    :param args: list of arguments.
     args[0] is always sender script hash
     args[1] is a key for a value (likely a key to ipfs)
     args[2] is the value to be stored (likely ipfs hash)
-:param type: str
+    :param type: str
 
-:return:
+    :return:
     byterarray: The result of the operation
-"""
+    """
 
 
     print("checking if authorized")
