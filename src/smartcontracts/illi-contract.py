@@ -38,10 +38,10 @@ def Main(operation, args):
 
     #blockchain key, is the key stored for the data stored (probably ipfs)
     blockchain_key = args[1]
-    blockchain_value = args[2]
 
     if operation == 'Put':
         print("Put")
+        blockchain_value = args[2]
         Put(GetContext(), blockchain_key, blockchain_value)
         return True
     if operation == 'Get':
