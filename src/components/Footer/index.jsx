@@ -13,7 +13,7 @@ const Footer = ({ classes }) => (
         <a href="#">Back to top</a>
       </p>
       <p>&copy; illuminate</p>
-      <p>powered by nOS <img class="footer-logo" src={require('/assets/nos-logo-circle-122x122.png')} alt="nOS logo"/></p>
+      <p>powered by <img class="footer-logo" src={require('/assets/nos-logo-circle-122x122.png')} alt="nOS logo"/> <a class="text-black" href="http://nos.io">nOS</a></p>
     </div>
   </footer>
 

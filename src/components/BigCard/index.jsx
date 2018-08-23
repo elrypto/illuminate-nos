@@ -76,6 +76,7 @@ class BigCard extends React.Component {
     this.processTreeOnStartup = this.processTreeOnStartup.bind(this);
     this.processGetRatingResult = this.processGetRatingResult.bind(this);
     this.unpackByteArrayResult = this.unpackByteArrayResult.bind(this);
+    this.updateRatingObj = this.updateRatingObj.bind(this);
 
     /* check if items are purchased and if there any ratings for this address */
     this.purchaseCheck();
@@ -84,16 +85,17 @@ class BigCard extends React.Component {
 
   /*
     will deal with resul of testinvoke, should only be called
-    for a single value coming from a key
+    for a single value coming from a key only
   */
   unpackByteArrayResult(data){
-    console.log("unpackByteArrayResult() " + JSON.stringify(data));
-    let result = JSON.parse(JSON.stringify(data));
+    let raw_data = JSON.stringify(data);
+    console.log("unpackByteArrayResult() " + raw_data);
+    let result = JSON.parse(raw_data);
     //testinvoke will return obj, result, it has an array stack,
     //the first element[0] is assumed our result, so we get the .value attrib
     let key_val = result.stack[0].value;
-
     var ret_val = null;
+
     if (key_val){
       ret_val = u.hexstring2str(key_val);
     }
@@ -105,7 +107,8 @@ class BigCard extends React.Component {
     console.log("ledgerRating() rating of:" + this.state.rating);
     const operation = "Get";
     const args = [RATINGS_KEY];
-    //  const static_rating_key = "QmXfYSWqDFoJpoYLnw1DavKHWmywd2CZ3eMZ45t2cVaKfx"; //workaround if getstorage does not return val
+
+    //need to get the existing rating tree, to update it
     nos.testInvoke({scriptHash, operation, args})
       .then((data) => this.updateRating(data))
       .catch((err) => alert(`Error: ${err.message}`));
@@ -126,6 +129,11 @@ class BigCard extends React.Component {
       //pull rating tree from ipfs
       var ipfs = IpfsApi('ipfs.infura.io', '5001', {protocol: 'https'});
       ipfs.files.get(ipfskey, this.processRetrieve);
+    }else {
+      //skip the ipfs step, which should only happen when there are 0 ratings
+
+      let newJsonTree = []
+      this.calculateNewRating(newJsonTree);
     }
   }
 
@@ -147,19 +155,16 @@ class BigCard extends React.Component {
     console.log("calculateNewRating()")
     console.log(JSON.stringify(jsonTree));
 
+
+    let found = false;
+
     jsonTree.forEach((rating_obj) => {
       console.log("rating_obj.neo_addr:" + rating_obj.neo_addr);
         if (new String(this.props.neo_addr).valueOf()===new String(rating_obj.neo_addr).valueOf()){
+          found = true;
           console.log("matched rating objects for this address:" + this.props.neo_addr);
 
-          let raw_rating = {
-            user_neo_addr: this.props.user_neo_addr,
-            rating: this.state.rating,
-            notes: "",
-            timestamp: ""
-          }
-
-          rating_obj.raw_ratings.push(raw_rating);
+          rating_obj = this.updateRatingObj(rating_obj);
 
           let this_rating = this.state.rating;
           let current_avg_rating = rating_obj.avg_rating;
@@ -172,11 +177,39 @@ class BigCard extends React.Component {
           console.log("current_avg_rating:" + current_avg_rating);
           console.log("num_ratings:" + num_ratings);
           console.log("new avg:" + new_avg);
-
-          this.saveNewTree(jsonTree);
         }
     })
+
+    if (found===false){
+      console.log("that user was not found in tree, create new rating obj");
+      let rating_obj = [];
+      rating_obj = this.updateRatingObj(rating_obj);
+      rating_obj.avg_rating = this.state.rating;
+      jsonTree.push(rating_obj);
+    }
+
+    this.saveNewTree(jsonTree);
   }
+
+  updateRatingObj(rating_obj){
+    let raw_rating = {
+      user_neo_addr: this.props.user_neo_addr,
+      rating: this.state.rating,
+      notes: "",
+      timestamp: ""
+    }
+
+
+    if (rating_obj.raw_ratings==null){
+      let empty_raws = []
+      rating_obj.raw_ratings = empty_raws;
+    }
+
+    rating_obj.raw_ratings.push(raw_rating);
+    return rating_obj;
+  }
+
+
 
   saveNewTree(jsonRatingTree){
     console.log("saving updated json to ipfs" + JSON.stringify(jsonRatingTree));
@@ -263,11 +296,12 @@ class BigCard extends React.Component {
     console.log("blockchain key data: " + JSON.stringify(data));
 
     let key = this.unpackByteArrayResult(data);
-
     console.log("unpacked ipfs key:" + key);
-
     let attemptRatingRetrieve = false;
 
+    if (key != null && key != ""){
+      attemptRatingRetrieve = true;
+    }
 
     if (attemptRatingRetrieve === true){
       //get ratings from IpfsApi
