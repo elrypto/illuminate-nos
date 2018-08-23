@@ -5,22 +5,18 @@ import Modal from 'react-modal';
 import StarRatingComponent from 'react-star-rating-component';
 import {u, wallet, sc, Neon} from "@cityofzion/neon-js";
 
-
 const nos = window.NOS.V1;
 
 //import { react } from "@nosplatform/api-functions";
 
 const LESSONS_KEY = "__lesson_key_illi";
-const RATINGS_KEY = 'AH33ibNoxCAxu3eTaEDwvyiG7mHsEn7zX7';
+const RATINGS_KEY = '__ratings_key_illi';
 const GAS = '602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7';
 const styles = {};
+const IPFS_BASE_URL = "https://ipfs.infura.io/ipfs/";
 
 /* ILLI contract */
 const scriptHash = "702088b5641bbf44c79bcea70659f40ad9a28aa0";
-//const addOp = "add";
-//have to add to back of add array the ipfs hash to put on blockchain
-//const addArgs = ["add", "AH33ibNoxCAxu3eTaEDwvyiG7mHsEn7zX7"];
-
 
 
 const customStyles = {
@@ -37,8 +33,12 @@ const customStyles = {
 
 Modal.setAppElement('#root');
 
-class BigCard extends React.Component {
 
+/*
+* TODO: Manage data for all cards colllectively
+* Linearly inefficient with per bigcard retrieves
+*/
+class BigCard extends React.Component {
 
   constructor(props) {
     super(props);
@@ -54,7 +54,7 @@ class BigCard extends React.Component {
       avg_user_rating: 0
     }
 
-    /* bind methods */
+    /* bind methods for React */
     this.handlePurchase = this.handlePurchase.bind(this);
     this.getBalance = this.getBalance.bind(this);
     this.doPurchaseTrxn= this.doPurchaseTrxn.bind(this);
@@ -74,33 +74,61 @@ class BigCard extends React.Component {
     this.ratingsCheck = this.ratingsCheck.bind(this);
     this.processStartupRetrieve = this.processStartupRetrieve.bind(this);
     this.processTreeOnStartup = this.processTreeOnStartup.bind(this);
+    this.processGetRatingResult = this.processGetRatingResult.bind(this);
+    this.unpackByteArrayResult = this.unpackByteArrayResult.bind(this);
 
-    /* check if items are purchased */
+    /* check if items are purchased and if there any ratings for this address */
     this.purchaseCheck();
     this.ratingsCheck();
+  }
+
+  /*
+    will deal with resul of testinvoke, should only be called
+    for a single value coming from a key
+  */
+  unpackByteArrayResult(data){
+    console.log("unpackByteArrayResult() " + JSON.stringify(data));
+    let result = JSON.parse(JSON.stringify(data));
+    //testinvoke will return obj, result, it has an array stack,
+    //the first element[0] is assumed our result, so we get the .value attrib
+    let key_val = result.stack[0].value;
+
+    var ret_val = null;
+    if (key_val){
+      ret_val = u.hexstring2str(key_val);
+    }
+    return ret_val;
   }
 
 
   ledgerRating(){
     console.log("ledgerRating() rating of:" + this.state.rating);
-    const operation = "balance";
-    const args = ["balance", "AH33ibNoxCAxu3eTaEDwvyiG7mHsEn7zX7"];
-    const static_rating_key = "QmXfYSWqDFoJpoYLnw1DavKHWmywd2CZ3eMZ45t2cVaKfx"; //workaround if getstorage does not return val
-
-    //on error use the static rating object (nothing in blockchain yet)
-    nos.getStorage({ scriptHash, RATINGS_KEY })
-        .then((data) => this.updateRating(data))
-        .catch((err) => this.updateRating(static_rating_key));
+    const operation = "Get";
+    const args = [RATINGS_KEY];
+    //  const static_rating_key = "QmXfYSWqDFoJpoYLnw1DavKHWmywd2CZ3eMZ45t2cVaKfx"; //workaround if getstorage does not return val
+    nos.testInvoke({scriptHash, operation, args})
+      .then((data) => this.updateRating(data))
+      .catch((err) => alert(`Error: ${err.message}`));
     }
 
 
-  updateRating(ipfskey){
-    console.log("updateRating with key:" + ipfskey);
+  updateRating(data){
+    console.log("returned:" + JSON.stringify(data));
+    let result = JSON.parse(JSON.stringify(data));
+     //testinvoke will return obj, result, it has an array stack,
+     //the first element[0] is assumed our result, so we get the .value attrib
+    let key_val = result.stack[0].value;
+    console.log("bytearray resturned:" + JSON.stringify(key_val));
+    var ipfskey = u.hexstring2str(key_val);
 
-    //pull rating tree from ipfs
-    var ipfs = IpfsApi('ipfs.infura.io', '5001', {protocol: 'https'});
-    ipfs.files.get(ipfskey, this.processRetrieve);
+    if (ipfskey != ""){
+      console.log("updateRating with key:" + ipfskey);
+      //pull rating tree from ipfs
+      var ipfs = IpfsApi('ipfs.infura.io', '5001', {protocol: 'https'});
+      ipfs.files.get(ipfskey, this.processRetrieve);
+    }
   }
+
 
   processRetrieve(err, files) {
     files.forEach((file) => {
@@ -219,26 +247,35 @@ class BigCard extends React.Component {
 
   }
 
-  /* ugh.... TODO: refactor with a single retrieve, this is a mess
-  * (also switch out of these method chains things!!!)
-  */
+
   ratingsCheck(){
-    //need to grab key from blockchain
-    const key = 'QmXfYSWqDFoJpoYLnw1DavKHWmywd2CZ3eMZ45t2cVaKfx';
-      /*  const scriptHash = '73d0441485cb0cf1bdde4eb1c3133fe107693744';
-        const key = 'AH33ibNoxCAxu3eTaEDwvyiG7mHsEn7zX7';
-        const static_rating_key = "QmXfYSWqDFoJpoYLnw1DavKHWmywd2CZ3eMZ45t2cVaKfx"; //workaround if getstorage does not return val
-
-        //on error use the static rating object (nothing in blockchain yet)
-        nos.getStorage({ scriptHash, key })
-            .then((data) => this.updateRating(data))
-            .catch((err) => this.updateRating(static_rating_key));
-        }*/
-
-    //get ratings from IpfsApi
-    var ipfs = IpfsApi('ipfs.infura.io', '5001', {protocol: 'https'});
-    ipfs.files.get(key, this.processStartupRetrieve);
+    console.log("calling testinvoke() to get ratings");
+    const operation = "Get";
+    const args = [RATINGS_KEY];
+    nos.testInvoke({scriptHash, operation, args})
+        .then((data) => this.processGetRatingResult(data))
+        .catch((err) => alert(`Error: ${err.message}`));
   }
+
+
+  processGetRatingResult(data){
+    console.log("processGetRatingResult() - component startup check for ratings")
+    console.log("blockchain key data: " + JSON.stringify(data));
+
+    let key = this.unpackByteArrayResult(data);
+
+    console.log("unpacked ipfs key:" + key);
+
+    let attemptRatingRetrieve = false;
+
+
+    if (attemptRatingRetrieve === true){
+      //get ratings from IpfsApi
+      var ipfs = IpfsApi('ipfs.infura.io', '5001', {protocol: 'https'});
+      ipfs.files.get(key, this.processStartupRetrieve);
+    }
+  }
+
 
   processStartupRetrieve(err, files){
     files.forEach((file) => {
@@ -381,7 +418,7 @@ render() {
 
             <div class="col-md-4">
               <div class="card mb-4 box-shadow">
-                <img class="card-img-top" src={new String(this.props.image_url)} alt="Card image cap"/>
+                <img class="card-img-top" src={IPFS_BASE_URL + this.props.image_url} alt="Card image cap"/>
                 <div class="card-body">
                   <p class="card-text-service-name">{this.props.service_name}</p>
                   <p class="card-text-descr">{this.props.description}</p>

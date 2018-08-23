@@ -56,7 +56,7 @@ class Header extends React.Component {
                   . <a href="#" class="text-white">Why NEO?</a></p>
                 </div>
                 <div class="col-sm-4 offset-md-1 py-4">
-                  <h4 class="text-white">"Me"</h4>
+                  <h4 class="text-white">Account</h4>
                   <ul class="list-unstyled">
                     <li><a href="#" class="text-white">Profile</a></li>
                     <li><a href="#" class="text-white">Site History</a></li>
@@ -70,7 +70,7 @@ class Header extends React.Component {
           <div class="navbar navbar-dark bg-dark box-shadow">
             <div class="container d-flex justify-content-between">
               <a href="#" class="navbar-brand d-flex align-items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="/assets/lightbulb.jpe"></path><circle cx="12" cy="13" r="4"></circle></svg>
+              <img class="logo" width="25" height="25" src={require('/assets/lightbulb.png')} alt="illuminate logo"/>
                 <strong>illuminate</strong>
               </a>
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
