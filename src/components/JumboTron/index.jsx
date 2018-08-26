@@ -14,7 +14,7 @@ render() {
       <section class="jumbotron text-center">
         <div class="container">
           <h1 class="jumbotron-heading">the microlessons community</h1>
-          <p class="lead text-muted">Experts offer live one on one instruction
+          <p class="lead text-muted">Learn with live one on one instruction
           through livestreamed video and live chat. Teach others and earn. All with cryptocurrencies.</p>
           <p>
             <a href="#" class="btn btn-secondary my-2">Learn More</a>

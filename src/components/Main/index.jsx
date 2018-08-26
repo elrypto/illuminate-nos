@@ -32,7 +32,7 @@ class Main extends React.Component {
        {
          neo_addr: "AX4x3vN1vxoG2ZNru2dKv4GRb8uztaqvjE",
          service_name : "Javasript Development Expert",
-         description : "Design/Dev Suggestions and Coding Help",
+         description : "Design/Development Suggestions and Help Coding",
          rating : "0",
          profile_link_out : "",
          tags: "js, javascript, react...",
