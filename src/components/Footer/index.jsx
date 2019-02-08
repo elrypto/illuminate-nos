@@ -13,14 +13,14 @@ const Footer = ({ classes }) => (
         <a href="#">Back to top</a>
       </p>
       <p>&copy; illuminate</p>
-      <p>powered by nOS <img class="footer-logo" src={require('/assets/nos-logo-circle-122x122.png')} alt="nOS logo"/></p>
+      <p><small>v0.3</small></p>
     </div>
   </footer>
 
 );
 
 Footer.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default injectSheet(styles)(Footer);

@@ -1,32 +1,39 @@
 import React from "react";
-import injectSheet from "react-jss";
-import PropTypes from "prop-types";
-
+import Backbone from "backbone";
 import Header from "./../../components/Header";
 import JumboTron from "./../../components/JumboTron";
 import Main from "./../../components/Main";
 import Footer from "./../../components/Footer";
-import NOSActions from "./../../components/NOSActions"
+import Menu from "./../../components/Menu";
+import { connect } from 'react-redux';
+import Notifications from 'react-notification-system-redux';
 
 
-const styles = {
-};
+class App extends React.Component {
 
-const App = ({ classes }) => (
-  <div className={classes.App}>
-    <Header title="illuminate - nOS dapp (prototype)" />
+  render() {
+    const {notifications} = this.props;
+    let activePath = Backbone.history.getFragment()
+    return (
+      <div id="content">
 
-    <JumboTron />
+        <Notifications notifications={notifications} />
 
-    <Main title="illuminate" />
+        <Header title="illuminate" />
 
-    <Footer />
+        <Menu />
 
-  </div>
-);
+        {this.props.children}
 
-App.propTypes = {
-  classes: PropTypes.object.isRequired
-};
+        <Footer />
 
-export default injectSheet(styles)(App);
+      </div>
+    )
+  }
+}
+const mapStateToProps = state => {
+  const {notifications} = state
+  return {notifications}
+}
+
+export default connect(mapStateToProps)(App)

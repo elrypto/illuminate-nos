@@ -2,6 +2,26 @@
   --jumbotron-padding-y: 3rem;
 }
 
+
+.site-header {
+  background-color:#3C4249;
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+}
+.site-header a {
+  color: #999;
+  transition: ease-in-out color .15s;
+}
+.site-header a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.logo {
+  margin-right: .25rem;
+  margin-bottom: .25rem;
+}
+
 .jumbotron {
   padding-top: var(--jumbotron-padding-y);
   padding-bottom: var(--jumbotron-padding-y);
@@ -55,6 +75,7 @@ footer p {
 .card-text-service-name{
   text-align: center;
   font-weight: bold;
+  font-size: small;
 }
 
 .card-text-descr{
@@ -62,4 +83,12 @@ footer p {
 
 .card-text-small{
   font-size: small;
+}
+
+.card-input{
+  margin-top: .5rem;
+}
+
+.lefty{
+  text-align: left;
 }

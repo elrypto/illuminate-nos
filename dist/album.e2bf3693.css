@@ -2,6 +2,11 @@
   --jumbotron-padding-y: 3rem;
 }
 
+.logo {
+  margin-right: .25rem;
+  margin-bottom: .25rem;
+}
+
 .jumbotron {
   padding-top: var(--jumbotron-padding-y);
   padding-bottom: var(--jumbotron-padding-y);
@@ -62,4 +67,8 @@ footer p {
 
 .card-text-small{
   font-size: small;
+}
+
+.card-input{
+  margin-top: .5rem;
 }

@@ -1,0 +1,93 @@
+:root {
+  --jumbotron-padding-y: 3rem;
+}
+
+.site-header {
+  background-color:#3C4249;
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+}
+.site-header a {
+  color: #999;
+  transition: ease-in-out color .15s;
+}
+.site-header a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.logo {
+  margin-right: .25rem;
+  margin-bottom: .25rem;
+}
+
+.jumbotron {
+  padding-top: var(--jumbotron-padding-y);
+  padding-bottom: var(--jumbotron-padding-y);
+  margin-bottom: 0;
+  background-color: #fff;
+}
+@media (min-width: 768px) {
+  .jumbotron {
+    padding-top: calc(var(--jumbotron-padding-y) * 2);
+    padding-bottom: calc(var(--jumbotron-padding-y) * 2);
+  }
+}
+
+.jumbotron p:last-child {
+  margin-bottom: 0;
+}
+
+.jumbotron-heading {
+  font-weight: 300;
+}
+
+.jumbotron .container {
+  max-width: 40rem;
+}
+
+footer {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+footer p {
+  margin-bottom: .25rem;
+}
+
+.box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
+
+.card-img-top{
+  width: 100px;
+  height: 200px;
+}
+
+.footer-logo{
+  width: 20px;
+  height: 20px;
+}
+
+.btn{
+  margin: .25rem;
+}
+
+.card-text-service-name{
+  text-align: center;
+  font-weight: bold;
+  font-size: small;
+}
+
+.card-text-descr{
+}
+
+.card-text-small{
+  font-size: small;
+}
+
+.card-input{
+  margin-top: .5rem;
+}
+
+.lefty{
+  text-align: left;
+}
